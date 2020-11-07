@@ -23,30 +23,49 @@ function curl_post_https($data){ // 模拟提交数据函数
     $backdata = $tmpInfo;
     return json_decode($backdata,true); // 返回数据，json格式
 }
-$data = '{
+?>
+<title>HackerEat Demo</title>
+<a href="/"><h1>HackerEat Demo</h1></a><hr>
+Please select some properties of the restaurant you want to go:
+<p><form action="" method="get">x | Cuisine: <input type="text" value="Mexican"><br>
+x | Payment: <select name="payment">
+  <option value="VISA">VISA</option>
+  <option value="cash">cash</option>
+  <option value="bank_debit_cards">Debit Cards</option>
+  <option value="American_Express">American Express</option>
+</select><br>
+x | Price: <select name="budget">
+  <option value="high">high</option>
+  <option value="medium">medium</option>
+  <option value="low">low</option>
+</select><br>
+<a href="#">+ Add more</a></p>
+<input type="submit"></form><hr><?php
+if(isset($_GET['payment'])){
+    $data = '{
     "from": "ratings",
     "where": {
         "userID": {
             "cuisine": "Mexican", 
-            "payment": "VISA"
+            "payment": "'.$_GET['payment'].'",
+            "budget": "'.$_GET['budget'].'"
         }
     },
     "recommend": "placeID",
-    "goal": {"rating": 2}
+    "goal": {"rating": 2},
+    "limit": 3
 }';
-?>
-<title>HackerEat Demo</title>
-<h1>HackerEat Demo</h1><hr>
-Please select some properties of the restaurant you want to go:
-<p>Cuisine:<input type="text" value="Mexican" disabled><br>
-payment:<input type="text" value="VISA" disabled><br>
-<a href="#">+ Add more</a></p>
-<input type="button" value="Submit" onclick="location.href='?show=1'"><br><?php
-if(isset($_GET['show'])){
-    $getit=curl_post_https($data)['hits'][0];
-    echo "This is you want information:<br>";
-    echo "Restaurant Name:".$getit["name"]."<br>";
-    echo "Address:".$getit["country"]." ".$getit["city"]." ".$getit["address"];
+    $getit=curl_post_https($data)['hits'];
+    echo "Here is some information that may you want:<br>";
+    echo "Best Restaurant Name:".$getit[0]["name"]."<br>";
+    echo "Address:".$getit[0]["country"]." ".$getit[0]["city"]." ".$getit[0]["address"].'<br><br>';
+    echo "Second Restaurant Name:".$getit[1]["name"]."<br>";
+    echo "Address:".$getit[1]["country"]." ".$getit[1]["city"]." ".$getit[1]["address"].'<br><br>';
+    echo "Third Restaurant Name:".$getit[2]["name"]."<br>";
+    echo "Address:".$getit[2]["country"]." ".$getit[2]["city"]." ".$getit[2]["address"].'<br><br>';
+    echo 'Origin Data:<br><pre>';
+    print_r($getit);
+    echo "</pre>";
     
 }
-?><hr>
+?><hr>Copyright &copy; 2020 by CCSAT
