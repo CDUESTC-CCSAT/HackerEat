@@ -25,7 +25,7 @@ function curl_post_https($data){ // 模拟提交数据函数
 }
 ?>
 <title>HackerEat Demo</title>
-<a href="/"><h1>HackerEat Demo</h1></a><hr>
+<a href="/"><h1>HackerEat Demo</h1></a><hr><table border="1" width="100%"><tr><td width="25%">
 Please select some properties of the restaurant you want to go:
 <p><form action="" method="get">x | Cuisine: <input type="text" value="Mexican"><br>
 x | Payment: <select name="payment">
@@ -68,4 +68,4 @@ if(isset($_GET['payment'])){
     echo "</pre>";
     
 }
-?><hr>Copyright &copy; 2020 by CCSAT
+?></td><td><center><a href="#">+ Add More</a></center></td></tr></table><hr>Copyright &copy; 2020 by CCSAT
